@@ -1,7 +1,3 @@
-# ============================================================
-# ANALYSE EXPLORATOIRE - TABLE CUSTOMERS
-# ============================================================
-
 import sqlite3
 from pathlib import Path
 
@@ -9,24 +5,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from data_loader import load_customers
 
-# ============================================================
-# 1. CONFIGURATION
-# ============================================================
-BASE_DIR = Path(__file__).resolve().parent
+# ---------------------------------------------------------
+# Chargement de la base Sqlite
+# ---------------------------------------------------------
+df = load_customers()
 
-DB_DIR = BASE_DIR / "database"
-DB_PATH = DB_DIR / "smartinsure.db"
-OUTPUT_DIR = Path("eda_results")
-
-# Création du dossier de sortie
-OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-
-# Charger la base Sqlite
-conn = sqlite3.connect(DB_PATH)
-df = pd.read_sql_query("SELECT * FROM customers",conn)
-conn.close()
-
+# ---------------------------------------------------------
+# Création de la matrice de corrélation
+# ---------------------------------------------------------
 # Supprimer les colonnes qu'on ne veut pas analyser
 df = df.drop(
     columns=["customer","effective_to_date", "response"],
