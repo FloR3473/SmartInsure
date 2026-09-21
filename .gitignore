@@ -1,2 +1,4 @@
 data/*.csv
 database/*.db
+graphiques/
+__pycache__/
